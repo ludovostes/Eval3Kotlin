@@ -1,7 +1,9 @@
 package com.technipixl.exo1
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.security.KeyChain.EXTRA_NAME
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,8 +61,14 @@ class MainActivity : AppCompatActivity() {
         //defintion de son layout
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false) //LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val adapter = MarvelCharAdapter( data = marvelCharList) {
-            Log.d("TEST", "selected ${it.name}")
+                marvelChar -> goToDetail(marvelChar)
         }
         recyclerView.adapter = adapter
+    }
+
+    private fun goToDetail(marvelChar: MarvelChar) {
+        val intent = Intent(this, ComicsDetailFragment::class.java)
+        intent.putExtra(EXTRA_NAME, marvelChar.name)
+        startActivity(intent)
     }
 }
